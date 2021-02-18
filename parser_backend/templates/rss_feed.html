@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block page_content %}
+<body>
+    <nav class="navbar navbar-light bg-dark fixed-top flex-md-nowrap p-0 shadow d-flex align-items-center justify-content-center navbar-custom">
+        <div class="row w-100">
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <!--button to open|collapse right-side-bar-->
+                <button class="btn btn-sm btn-outline-primary h-80" type="button" data-toggle="collapse" data-target="#right-side-bar" aria-expanded="true" aria-controls="right-side-bar">
+                    <h4>FEED\open</h4>
+                </button>
+            </div>
+            <div class="col-md-10 d-flex align-items-center" style="color:grey">
+                <div class="navbar-brand pl-md-3 mr-auto d-inline-flex" style="color:lightgrey">{{cur_feed}}</h5>
+                </div>
+                <form class="form-inline my-auto d-inline-flex">    
+                    <input class="form-control mr-sm-2" type="text" placeholder="Add Feed's URL" aria-label="Add Feed's URL">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add</button>
+                </form>
+            </div>
+            {% comment %} <form class="сol-md-3 form-inline d-flex align-items-center justify-content-center">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> {% endcomment %}
+        </div>
+    </nav>
+    
+        <div class="container-fluid">
+            <div class="row">
+                <!-- sidebar starts here -->
+                {% comment %} <div class="collapse show" id="right-side-bar"> {% endcomment %}
+                    <nav class="sidebar-expanded col-md-2 d-none d-md-block bg-light  sticky-top top-offset full-height collapse show" id="right-side-bar">
+                        <div class="sidebar-sticky" style="text-overflow: ellipsis;">
+                            <ul class="nav flex-column pt-xl-2">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="."> All Articles </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/starred-articles"> Starred Articles </a>
+                                </li>
+                            {% comment %} </ul> {% endcomment %}
+                                <li class="nav-item">
+                                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                                        <span>Subscriptions:</span></h6>
+                                </li>
+                            {% comment %} <ul class="nav flex-column"> {% endcomment %}
+                                <!-- USE LIST GROUPS HERE!!!! https://getbootstrap.com/docs/4.5/components/list-group/ -->
+                                {% for feed in feed_list %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'open_feed' feed.pk %}"> {{ feed.title }} </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </nav>
+                {% comment %} </div> {% endcomment %}
+                <!-- sidebar ends here -->
+                <!-- main starts here -->
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                    <div class="list-group sticky-top top-offset">
+                        <!-- PUT DJANGO's "FOR" HERE!!! -->
+                        {% for post in posts %}
+                        {% comment %} <span>POSSSSST</span> {% endcomment %}
+                        <a class="list-group-item list-group-item-action" target="_blank" rel="noopener noreferrer" href="{{post.url}}" type="button">
+                            <div class="d-flex w-600 justify-content-between">
+                                <h5 class="mb-1">{{post.title}}</h5>
+                                <small>{{post.release_date}}</small>
+                            </div>
+                        </a>
+                        {% endfor %}
+                        {% comment %} <div class="collapse" id="article-id1">
+                            <p>post1.description</p>
+                        </div> {% endcomment %}
+                        
+                        {% comment %} <button class="list-group-item list-group-item-action" type="button" data-toggle="collapse" data-target="#article-id1" aria-expanded="false" aria-controls="article-id1">
+                            <div class="d-flex w-600 justify-content-between">
+                                <h5 class="mb-1">post1.title</h5>
+                                <small>post1.date</small>
+                            </div>
+                        </button>
+                        <div class="collapse" id="article-id1">
+                            <p>post1.description</p>
+                        </div> {% endcomment %}
+                    </div>
+                </main>
+            </div>
+        </div>
+    
+</body>
+{% endblock %}
